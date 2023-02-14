@@ -1,0 +1,26 @@
+_hash: 3b4ae3a13a504b182ef406346a732dc6
+method: DCASE2018_Task5_baseline
+parameters:
+  _hash: 113564d184f826f45da520b7199f70ad
+  chain:
+  - processor_name: AudioReadingProcessor
+  - init_parameters:
+      parameters:
+        mel:
+          fmax: 8000
+          fmin: 50
+          fs: 16000
+          hop_length_samples: 320
+          hop_length_seconds: 0.02
+          htk: false
+          logarithmic: true
+          method: mel
+          n_fft: 1024
+          n_mels: 40
+          normalize_mel_bands: false
+          spectrogram_type: magnitude
+          win_length_samples: 640
+          win_length_seconds: 0.04
+          window_type: hamming_asymmetric
+    processor_name: RepositoryFeatureExtractorProcessor
+  method: DCASE2018_Task5_baseline

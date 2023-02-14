@@ -1,0 +1,54 @@
+_hash: c5a9d45a5bf2c88e593b29ca2919a0e6
+method: DCASE2018_Task5_baseline
+parameters:
+  _hash: 7cee66ec5104f144e2e7887ad9cfb13c
+  chain:
+  - dependency_parameters:
+      channels: 4
+      fs: 16000
+      hop_length_samples: 320
+      hop_length_seconds: 0.02
+      parameters:
+        mel:
+          fmax: 8000
+          fmin: 50
+          fs: 16000
+          hop_length_samples: 320
+          hop_length_seconds: 0.02
+          htk: false
+          logarithmic: true
+          method: mel
+          n_fft: 1024
+          n_mels: 40
+          normalize_mel_bands: false
+          spectrogram_type: magnitude
+          win_length_samples: 640
+          win_length_seconds: 0.04
+          window_type: hamming_asymmetric
+      recipe: !!python/object/new:dcase_util.containers.containers.ListDictContainer
+        listitems:
+        - !!python/object/new:dcase_util.containers.containers.DictContainer
+          dictitems:
+            label: mel
+      win_length_samples: 640
+      win_length_seconds: 0.04
+    processor_name: RepositoryFeatureReadingProcessor
+  - init_parameters:
+      enable: true
+    processor_name: RepositoryNormalizationProcessor
+  - init_parameters:
+      hop_length: 501
+      sequence_length: 501
+    processor_name: RepositorySequencingProcessor
+  - init_parameters:
+      expanded_dimension: first
+      label: mel
+    processor_name: RepositoryToMatrixProcessor
+  - init_parameters:
+      axis_list:
+      - channel_axis
+      - sequence_axis
+      - data_axis
+      - time_axis
+    processor_name: DataShapingProcessor
+  method: DCASE2018_Task5_baseline

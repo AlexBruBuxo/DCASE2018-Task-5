@@ -1,0 +1,109 @@
+_hash: 18947b11fe8b5a98b0ee68ce350074af
+hop_length_seconds: 0.02
+method: DCASE2018_Task5_baseline
+parameters:
+  _hash: e2a7df02aa24b756e74c98464ef28645
+  backend: tensorflow
+  compile:
+    loss: sparse_categorical_crossentropy
+    metrics:
+    - sparse_categorical_accuracy
+  fit:
+    batch_size: 256
+    epochs: 500
+    processing_interval: 10
+    shuffle: true
+    undersampling: uniform
+  model:
+    config:
+    - class_name: Conv2D
+      config:
+        data_format: CONVOLUTION_DATA_FORMAT
+        filters: CONVOLUTION_FILTER
+        input_shape:
+        - 1
+        - FEATURE_VECTOR_LENGTH
+        - INPUT_SEQUENCE_LENGTH
+        kernel_initializer: CONVOLUTION_INIT
+        kernel_size:
+        - FEATURE_VECTOR_LENGTH
+        - 5
+        padding: CONVOLUTION_BORDER_MODE
+        strides:
+        - 1
+        - 1
+    - class_name: BatchNormalization
+      config:
+        axis: 1
+    - class_name: Activation
+      config:
+        activation: CONVOLUTION_ACTIVATION
+    - class_name: MaxPooling2D
+      config:
+        data_format: CONVOLUTION_DATA_FORMAT
+        pool_size:
+        - 1
+        - 5
+        strides:
+        - 1
+        - 5
+    - class_name: Dropout
+      config:
+        rate: CONVOLUTION_DROPOUT
+    - class_name: Conv2D
+      config:
+        data_format: CONVOLUTION_DATA_FORMAT
+        filters: CONVOLUTION_FILTER * 2
+        kernel_initializer: CONVOLUTION_INIT
+        kernel_size:
+        - 1
+        - 3
+        padding: CONVOLUTION_BORDER_MODE
+        strides:
+        - 1
+        - 1
+    - class_name: BatchNormalization
+      config:
+        axis: 1
+    - class_name: Activation
+      config:
+        activation: CONVOLUTION_ACTIVATION
+    - class_name: GlobalMaxPooling2D
+      config:
+        data_format: CONVOLUTION_DATA_FORMAT
+    - class_name: Dropout
+      config:
+        rate: CONVOLUTION_DROPOUT
+    - class_name: Dense
+      config:
+        activation: relu
+        kernel_initializer: uniform
+        units: DENSE_UNITS
+    - class_name: Dropout
+      config:
+        rate: DENSE_DROPOUT
+    - class_name: Dense
+      config:
+        activation: softmax
+        kernel_initializer: uniform
+        units: CLASS_COUNT
+    constants:
+      CLASS_COUNT: 9
+      CONVOLUTION_ACTIVATION: relu
+      CONVOLUTION_BORDER_MODE: valid
+      CONVOLUTION_DATA_FORMAT: channels_first
+      CONVOLUTION_DROPOUT: 0.2
+      CONVOLUTION_FILTER: 32
+      CONVOLUTION_INIT: he_normal
+      DENSE_DROPOUT: 0.2
+      DENSE_UNITS: 64
+      FEATURE_VECTOR_LENGTH: 40
+      INPUT_SEQUENCE_LENGTH: 501
+  optimizer:
+    class_name: Adam
+    config:
+      lr: 0.0001
+  profile: deterministic
+  random_seed: 0
+  validation_amount: 0.3
+win_length_seconds: 0.04
